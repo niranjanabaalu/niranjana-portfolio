@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/niranjana-portfolio/static/css/main.e6c13ad2.css",
-    "main.js": "/niranjana-portfolio/static/js/main.938d6f66.js",
+    "main.css": "/niranjana-portfolio/static/css/main.673ca2f4.css",
+    "main.js": "/niranjana-portfolio/static/js/main.6f8476c7.js",
     "static/js/453.438d9e50.chunk.js": "/niranjana-portfolio/static/js/453.438d9e50.chunk.js",
     "static/media/Niranjana_B_Photo_goa.jpg": "/niranjana-portfolio/static/media/Niranjana_B_Photo_goa.709bcfec3e6acc32fea9.jpg",
     "index.html": "/niranjana-portfolio/index.html",
-    "main.e6c13ad2.css.map": "/niranjana-portfolio/static/css/main.e6c13ad2.css.map",
-    "main.938d6f66.js.map": "/niranjana-portfolio/static/js/main.938d6f66.js.map",
+    "main.673ca2f4.css.map": "/niranjana-portfolio/static/css/main.673ca2f4.css.map",
+    "main.6f8476c7.js.map": "/niranjana-portfolio/static/js/main.6f8476c7.js.map",
     "453.438d9e50.chunk.js.map": "/niranjana-portfolio/static/js/453.438d9e50.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e6c13ad2.css",
-    "static/js/main.938d6f66.js"
+    "static/css/main.673ca2f4.css",
+    "static/js/main.6f8476c7.js"
   ]
 }
