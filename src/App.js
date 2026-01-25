@@ -9,7 +9,71 @@ function App() {
   };
 
   const [visible, setVisible] = useState(false);
-  const [hover, setHover] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [messageSent, setMessageSent] = useState(false);
+  const [error, setError] = useState("");
+
+  // Handle form input change
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setError("");
+  };
+
+  // Handle form submission with mailto fallback
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    // Validate form
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      setError("Please fill in all fields");
+      setLoading(false);
+      return;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError("Please enter a valid email address");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      // Create mailto link as primary method
+      const subject = `Portfolio Contact from ${formData.name}`;
+      const body = `Name: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}`;
+      const mailtoLink = `mailto:niranjanab005@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      
+      // Try using mailto (works best on desktop with email client)
+      window.location.href = mailtoLink;
+      
+      // Show success message
+      setMessageSent(true);
+      setFormData({ name: "", email: "", message: "" });
+      setTimeout(() => setMessageSent(false), 4000);
+      
+      // Fallback: Also show alternative contact info
+      setTimeout(() => {
+        setError("💡 Tip: Your email client should open. If not, please email me directly at niranjanab005@gmail.com");
+      }, 500);
+    } catch (err) {
+      setError("Please email me directly at niranjanab005@gmail.com with your message");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const skills = [
     { name: "C++", level: 60 },
@@ -39,59 +103,71 @@ function App() {
     <div className="container">
       {/* Navbar */}
       <nav className="navbar">
-        {["About", "Skills", "Projects", "Contact"].map((item) => (
-          <button
-            key={item}
-            className="nav-btn"
-            onClick={() => scrollToSection(item.toLowerCase())}
-          >
-            {item}
-          </button>
-        ))}
+        <div className="nav-left">
+          <span className="brand">NB</span>
+        </div>
+        <div className="nav-right">
+          {["About", "Skills", "Projects", "Contact"].map((item) => (
+            <button
+              key={item}
+              className="nav-btn"
+              onClick={() => scrollToSection(item.toLowerCase())}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
       </nav>
 
       {/* Hero Section */}
       <header className="hero">
-        <div className="hero-text">
-          <h1 className="name">Niranjana Balasubramanian</h1>
-          <p className="typing" >
-            Software Developer in the Making | Driven to Build & Learn
-          </p>
-          <div className="social-links">
-            <a href="https://github.com/niranjanabaalu" className="link">
-              GitHub
-            </a>
-            <a href="https://leetcode.com/u/Niranjana_B/" className="link">
-              LeetCode
-            </a>
-            <a
-              href="https://auth.geeksforgeeks.org/user/niranjanabalazglw"
-              className="link"
-            >
-              GeeksforGeeks
-            </a>
-            <a
-              href="https://linkedin.com/in/niranjana-balasubramanian-1ab0a4251"
-              className="link"
-            >
-              LinkedIn
-            </a>
-            <a
-  href={process.env.PUBLIC_URL + "/NIRANJANA_B_INTERNSHIP_RESUME.pdf"}
-  target="_blank"
-  rel="noopener noreferrer"
-  className={hover ? "resume-btn hover" : "resume-btn"}
-  onMouseEnter={() => setHover(true)}
-  onMouseLeave={() => setHover(false)}
->
-  Resume
-</a>
-
+        <div className="hero-inner">
+          <div className="hero-left">
+            <h1 className="name">Niranjana<br />Balasubramanian</h1>
+            <p className="tagline">
+              Software Developer in the Making | Driven to Build & Learn
+            </p>
+            <div className="cta-row">
+              <a
+                href={process.env.PUBLIC_URL + "/NIRANJANA_B_INTERNSHIP_RESUME.pdf"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="primary-cta"
+              >
+                Download Resume
+              </a>
+              <a href="#projects" className="secondary-cta">
+                View Work
+              </a>
+            </div>
+            <div className="social-links">
+              <a href="https://github.com/niranjanabaalu" className="link" title="GitHub">
+                GitHub
+              </a>
+              <a href="https://leetcode.com/u/Niranjana_B/" className="link" title="LeetCode">
+                LeetCode
+              </a>
+              <a
+                href="https://auth.geeksforgeeks.org/user/niranjanabalazglw"
+                className="link"
+                title="GeeksforGeeks"
+              >
+                GFG
+              </a>
+              <a
+                href="https://linkedin.com/in/niranjana-balasubramanian-1ab0a4251"
+                className="link"
+                title="LinkedIn"
+              >
+                LinkedIn
+              </a>
+            </div>
           </div>
-        </div>
-        
-        <div className="hero-image">
-          <img src={profilePic} alt="profile" className="profile-pic" />
+          <div className="hero-right">
+            <div className="hero-card">
+              <img src={profilePic} alt="Niranjana Balasubramanian" className="profile-pic" />
+            </div>
+          </div>
         </div>
       </header>
 
@@ -157,15 +233,88 @@ function App() {
 
       {/* Contact Section */}
       <section id="contact" className="section">
-        <h2 className="section-title">Contact</h2>
-        <div className="contact-card">
-          <p>
-            Email:{" "}
-            <a href="mailto:niranjanab005@gmail.com" className="contact-link">
-              niranjanab005@gmail.com
-            </a>
-          </p>
-          <p>Phone: +91 9345011575</p>
+        <h2 className="section-title">Get In Touch</h2>
+        <p className="text" style={{ marginBottom: "50px" }}>
+          Have a question or want to collaborate? I'd love to hear from you. Reach out through the form below or contact me directly.
+        </p>
+
+        <div className="contact-container">
+          {/* Contact Info */}
+          <div className="contact-info-section">
+            <div className="info-card">
+              <div className="info-icon">✉️</div>
+              <h3 className="info-title">Email</h3>
+              <a href="mailto:niranjanab005@gmail.com" className="info-value" title="Send email">
+                niranjanab005@gmail.com
+              </a>
+            </div>
+            <div className="info-card">
+              <div className="info-icon">📱</div>
+              <h3 className="info-title">Phone</h3>
+              <a href="tel:+919345011575" className="info-value" title="Call">
+                +91 9345011575
+              </a>
+            </div>
+            <div className="info-card">
+              <div className="info-icon">📍</div>
+              <h3 className="info-title">Location</h3>
+              <p className="info-value">India</p>
+            </div>
+          </div>
+
+          {/* Contact Form */}
+          <form className="contact-form" onSubmit={handleFormSubmit}>
+            <h3 className="form-title">Send Me a Message</h3>
+            
+            <div className="form-group">
+              <label htmlFor="name" className="form-label">Full Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleFormChange}
+                placeholder="John Doe"
+                className="form-input"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="email" className="form-label">Your Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleFormChange}
+                placeholder="john@example.com"
+                className="form-input"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="message" className="form-label">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleFormChange}
+                placeholder="Write your message here..."
+                className="form-textarea"
+                rows="6"
+                required
+              />
+            </div>
+
+            {error && <div className="form-alert form-error">{error}</div>}
+            {messageSent && <div className="form-alert form-success">✓ Thank you! Your message will be sent to my email.</div>}
+
+            <button type="submit" className="form-button" disabled={loading}>
+              {loading ? "Processing..." : "Send Message"}
+            </button>
+          </form>
         </div>
       </section>
 
