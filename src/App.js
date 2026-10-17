@@ -398,14 +398,14 @@ function App() {
               </div>
             </div>
             <div className="project-actions">
-              <a
+              {/*<a
                 href="https://github.com/niranjanabaalu"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary"
               >
                 View on GitHub
-              </a>
+              </a>*/}
             </div>
           </div>
 
