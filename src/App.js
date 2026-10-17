@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import profilePic from './assets/Portfolio_Photo1.jpeg';
+import profilePic from './assets/Portfolio_Photo.jpeg';
 import './App.css';
 
 // Icon components
@@ -33,8 +33,8 @@ const CodeIcon = () => (
 
 const GeeksforGeeksIcon = () => (
   <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/>
-    <path d="M9 12l1.5 1.5L13.5 9"/>
+    <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z" />
+    <path d="M9 12l1.5 1.5L13.5 9" />
   </svg>
 );
 
@@ -52,7 +52,7 @@ function App() {
   useEffect(() => {
     const handleScroll = () => {
       const sections = ['home', 'about', 'education', 'projects', 'skills', 'internship', 'contact'];
-      
+
       for (const section of sections) {
         const el = document.getElementById(section);
         if (el) {
@@ -171,7 +171,7 @@ function App() {
               </p>
               <div className="hero-cta">
                 <a
-                  href={process.env.PUBLIC_URL + '/NIRANJANA_B_INTERNSHIP_RESUME.pdf'}
+                  href={process.env.PUBLIC_URL + '/Niranjana_B_Resume.pdf'}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-primary"
@@ -192,7 +192,7 @@ function App() {
                 <a href="https://leetcode.com/u/Niranjana_B/" className="social-link" title="LeetCode" target="_blank" rel="noopener noreferrer">
                   <LeetCodeIcon />
                 </a>
-                <a href="https://www.codingame.com" className="social-link" title="CodinGame" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.codingame.com/profile/b1c77538c698fd485194b16dfb42c86e6636636" className="social-link" title="CodinGame" target="_blank" rel="noopener noreferrer">
                   <CodeIcon />
                 </a>
                 <a href="https://auth.geeksforgeeks.org/user/niranjanabalazglw" className="social-link" title="GeeksforGeeks" target="_blank" rel="noopener noreferrer">
@@ -278,7 +278,7 @@ function App() {
             <h2 className="section-title">Projects</h2>
             <p className="section-subtitle">Featured work</p>
           </div>
-          
+
           {/* Art Vault Auctions */}
           <div className="project-case-study reveal">
             <div className="project-header">
@@ -628,7 +628,7 @@ function App() {
                   <a href="mailto:niranjanab005@gmail.com" className="footer-link">Email Me</a>
                 </li>
                 <li className="footer-link-item">
-                  <a href={process.env.PUBLIC_URL + '/NIRANJANA_B_INTERNSHIP_RESUME.pdf'} target="_blank" rel="noopener noreferrer" className="footer-link">Resume</a>
+                  <a href={process.env.PUBLIC_URL + '/NIRANJANA_B_RESUME.pdf'} target="_blank" rel="noopener noreferrer" className="footer-link">Resume</a>
                 </li>
               </ul>
             </div>

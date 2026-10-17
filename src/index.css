@@ -1,3 +1,49 @@
+/* Fonts: Instrument Serif (display) + DM Sans (body).
+   Loaded with display=swap; fallbacks are defined in the font stacks below.
+   For best performance you can move this to <link> tags in public/index.html. */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap');
+
+/* ==========================================================================
+   Design tokens — single source of truth for the whole portfolio
+   ========================================================================== */
+:root {
+  /* Palette: Nature Green & Cream */
+  --green-700: #2E5D45;   /* botanical green (brand, projects section) */
+  --green-900: #1F3F30;   /* deeper green (footer, hover states) */
+  --sage: #A7B89B;        /* decorative lines and borders only */
+  --sage-pale: #D9E4D1;
+  --stone: #EAE6D9;
+  --ivory: #F8F6EE;
+  --ink: #25291F;
+  --ink-soft: #484E41;    /* 7.6:1 on ivory */
+  --ink-muted: #5C6354;   /* 5.5:1 on ivory, 4.7:1 on stone */
+  --clay: #C87555;        /* restrained accent: hairlines and small marks only */
+
+  --hairline: rgba(37, 41, 31, 0.16);
+  --hairline-light: rgba(248, 246, 238, 0.24);
+
+  /* Typography */
+  --font-display: 'Instrument Serif', 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+
+  /* Layout & motion */
+  --max-width: 1240px;
+  --gutter: clamp(20px, 4vw, 48px);
+  --section-pad: clamp(72px, 10vw, 128px);
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --transition: 0.25s var(--ease);
+  --transition-slow: 0.8s var(--ease);
+
+  /* Decorative line-art sprig (inline SVG, no extra request) */
+  --sprig: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 320' fill='none' stroke='%23A7B89B' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M80 316 L80 14 M80.0 290.0 C106.0 284.0 126.0 264.0 130.0 236.0 C104.0 244.0 84.0 262.0 80.0 290.0 Z M80.0 290.0 L116.0 252.0 M80.0 250.0 C55.3 244.3 36.3 225.3 32.5 198.7 C57.2 206.3 76.2 223.4 80.0 250.0 Z M80.0 250.0 L45.8 213.9 M80.0 205.0 C103.4 199.6 121.4 181.6 125.0 156.4 C101.6 163.6 83.6 179.8 80.0 205.0 Z M80.0 205.0 L112.4 170.8 M80.0 165.0 C57.9 159.9 40.9 142.9 37.5 119.1 C59.6 125.9 76.6 141.2 80.0 165.0 Z M80.0 165.0 L49.4 132.7 M80.0 125.0 C99.5 120.5 114.5 105.5 117.5 84.5 C98.0 90.5 83.0 104.0 80.0 125.0 Z M80.0 125.0 L107.0 96.5 M80.0 90.0 C63.1 86.1 50.1 73.1 47.5 54.9 C64.4 60.1 77.4 71.8 80.0 90.0 Z M80.0 90.0 L56.6 65.3 M80.0 55.0 C93.0 52.0 103.0 42.0 105.0 28.0 C92.0 32.0 82.0 41.0 80.0 55.0 Z M80.0 55.0 L98.0 36.0 M80.0 32.0 C69.6 29.6 61.6 21.6 60.0 10.4 C70.4 13.6 78.4 20.8 80.0 32.0 Z M80.0 32.0 L65.6 16.8 M80.0 16.0 C93.0 13.0 103.0 3.0 105.0 -11.0 C92.0 -7.0 82.0 2.0 80.0 16.0 Z M80.0 16.0 L98.0 -3.0'/%3E%3C/svg%3E");
+
+  /* Focus colour (overridden inside dark sections) */
+  --focus: var(--green-700);
+}
+
+/* ==========================================================================
+   Reset & base
+   ========================================================================== */
 *,
 *::before,
 *::after {
@@ -8,18 +54,21 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--sage) var(--ivory);
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--font-body);
+  font-size: 17px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(180deg, #f6fbff, #eef7ff);
-  color: #0f1724;
-  line-height: 1.6;
+  background: var(--ivory);
+  color: var(--ink);
+  line-height: 1.65;
+  overflow-x: hidden;
 }
 
 #root {
@@ -27,34 +76,50 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-/* Scrollbar styling */
+img {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--sage-pale);
+  color: var(--green-900);
+}
+
+/* Scrollbar (WebKit) */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: linear-gradient(180deg, rgba(15, 76, 117, 0.03), rgba(0, 180, 216, 0.03));
+  background: var(--ivory);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #00b4d8, #48cae4);
+  background: var(--sage);
   border-radius: 10px;
-  border: 2px solid rgba(15, 76, 117, 0.08);
+  border: 2px solid var(--ivory);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #48cae4, #00b4d8);
-  border-color: rgba(0, 180, 216, 0.15);
+  background: var(--green-700);
 }
 
-/* Typography enhancements */
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1.2;
-  font-weight: 800;
+/* Typography */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+h4, h5, h6 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  line-height: 1.3;
 }
 
 p {
@@ -62,36 +127,29 @@ p {
 }
 
 a {
-  transition: all 0.2s ease;
+  color: inherit;
+  transition: color var(--transition), background-color var(--transition), border-color var(--transition);
 }
 
 button {
   font-family: inherit;
 }
 
-/* Focus styles for accessibility */
-button:focus,
-a:focus {
-  outline: 2px solid rgba(0, 180, 216, 0.5);
-  outline-offset: 2px;
+/* Keyboard focus — visible for keyboard users only */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
 }
 
-/* Utility classes */
+/* Utility */
 .container-max {
-  max-width: 1100px;
+  max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 var(--gutter);
 }
 
-/* Responsive padding */
-@media screen and (max-width: 768px) {
-  body {
-    padding: 0 16px;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  body {
-    padding: 0 12px;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
